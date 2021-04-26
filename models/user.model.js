@@ -17,14 +17,15 @@ const userSchema = new Schema({
     },
     role: {
         type: String,
-        enum: ['USER', 'RESTAURANT'],
-        required: true
+        enum: ['USER', 'OWNER'],
+        required: true,
+        default: 'USER'
     },
     profileImg: {
         type: String,
         default: ' '
     },
-    restaurantes: [{
+    restaurants: [{
         type: Schema.Types.ObjectId,
         ref: 'Restaurant'
     }]

@@ -3,19 +3,12 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const restaurantSchema = new Schema({
-    username: {
-        type: String,
-        required: [true, 'El nombre de usuario es obligatorio'],
-        unique: true
-    },
+
     name: {
         type: String,
         required: [true, 'El nombre es obligatorio']
     },
-    password: {
-        type: String,
-        required: [true, 'La contraseña es obligatorio']
-    },
+
     profileImg: {
         type: String,
         default: ' '
@@ -25,6 +18,18 @@ const restaurantSchema = new Schema({
         minlength: 10,
         maxlength: 500
 },
+
+    specialties: {
+        type: String,
+        enum: ['pizza', 'hamburguer', 'sushi', 'chinese', 'veggie', 'japanese', 'poke', 'dessert', 'spanish', 'italian', 'tapas', 'pasta', 'kebab', 'mexican', 'salad', 'indian'],
+        required: true
+    },
+
+    menu: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Dish'
+    }],
+
     availability: {       
         gaps:  [{
             hora: new Date(),
