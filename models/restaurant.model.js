@@ -17,7 +17,7 @@ const restaurantSchema = new Schema({
         type: String,
         minlength: 10,
         maxlength: 500
-},
+    },
 
     specialties: {
         type: String,
@@ -30,9 +30,9 @@ const restaurantSchema = new Schema({
         ref: 'Dish'
     }],
 
-    availability: {       
-        gaps:  [{
-            hora: new Date(),
+    availability: {
+        gaps: [{
+            time: Date,
             number_people: Number
         }]
     },

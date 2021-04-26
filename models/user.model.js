@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    username : {
+    username: {
         type: String,
         required: [true, 'El nombre de usuario es obligatorio'],
         unique: true
@@ -11,7 +11,7 @@ const userSchema = new Schema({
         type: String,
         required: [true, 'El nombre es obligatorio']
     },
-    password: {
+    passwd: {
         type: String,
         required: [true, 'La contraseña es obligatorio']
     },
@@ -23,7 +23,7 @@ const userSchema = new Schema({
     },
     profileImg: {
         type: String,
-        default: ' '
+        default: ' '   // TODO poner url definitiva
     },
     restaurants: [{
         type: Schema.Types.ObjectId,
