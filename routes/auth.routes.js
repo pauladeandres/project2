@@ -5,7 +5,7 @@ const bcryptSalt = 10
 
 const User = require('./../models/user.model')
 
-router.get('/sign-up', (req, res) => res.render('pages/auth/sign-up'))
+router.get('/sign-up', (req, res) => res.render('pages/auth/sign-up-form'))
 
 router.post('/sign-up', (req, res) => {
     const { username, name, passwd, role, profileImg } = req.body
@@ -38,7 +38,7 @@ router.post('/sign-up', (req, res) => {
         .catch(err => console.log('error', err))
 })
 
-router.get('/login', (req, res) => res.render('pages/login-form'))
+router.get('/login', (req, res) => res.render('pages/auth/login-form'))
 
 // Login (post)
 router.post('/login', (req, res) => {

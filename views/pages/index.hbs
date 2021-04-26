@@ -1,3 +1,30 @@
 <div class="container">
     <h1>Welcome to {{siteTitle}}</h1>
 </div>
+<div class="container">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+            <h2>Look for restaurants</h2>
+            <hr>
+
+            <form action="/restaurants/edit/{{id}}" method="POST">
+
+                <div class="form-group">
+                    <label for="specialties">Name:</label>
+                    <input type="text" class="form-control" id="specialties" name="specialties">
+                </div>
+             
+                <button type="submit" class="btn btn-dark btn-block">Search</button>
+                {{#if errorMessage}}
+                <div id="error">
+                    <p>{{errorMessage}}</p>
+                </div>
+                {{/if}}
+            </form>
+                
+        </div>
+    </div>
+</div>
