@@ -12,19 +12,19 @@
                     <label for="username">Username</label>
                     <input type="text" class="form-control" id="username" name="username">
                 </div>
-            
+
                 <div class="form-group">
                     <label for="pwd">Password</label>
                     <input type="password" class="form-control" id="pwd" name="passwd">
                 </div>
-            <button type="submit" class="btn btn-dark btn-block">Register</button>
-            {{#if errorMessage}}
-            <div id="error">
-                <p>{{errorMessage}}</p>
-            </div>
-            {{/if}}
+                <button type="submit" class="btn btn-dark btn-block">Login</button>
+                {{#if errorMessage}}
+                <div id="error">
+                    <p>{{errorMessage}}</p>
+                </div>
+                {{/if}}
             </form>
-            
+
         </div>
     </div>
 </div>
