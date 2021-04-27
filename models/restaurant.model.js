@@ -39,11 +39,10 @@ const restaurantSchema = new Schema({
     // ]},
 
 
-    specialties: {
-        type: [String],
-        enum: ['pizza', 'hamburguer', 'sushi', 'chinese', 'veggie', 'japanese', 'poke', 'dessert', 'spanish', 'italian', 'tapas', 'pasta', 'kebab', 'mexican', 'salad', 'indian'],
-        required: true
-    },
+    specialties: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Specialty'
+    }],
 
     menu: [{
         type: Schema.Types.ObjectId,

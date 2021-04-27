@@ -9,7 +9,7 @@ router.get('/', (req, res) => res.render('pages/restaurants/index')) //TODO
 const { isLoggedIn, checkRoles } = require('./../middlewares')
 
 
-router.get('/map', (req,res) => res.render('pages/restaurants/map'))
+router.get('/map', (req, res) => res.render('pages/restaurants/map'))
 
 router.get('/detail/:id', (req, res) => {
 
@@ -37,15 +37,32 @@ router.get('/edit/:id', isLoggedIn, checkRoles('OWNER'), (req, res) => {
     Restaurant.findById(rest_id).then(elem => res.render('pages/restaurants/edit-form', elem)).catch(err => console.log('Error!', err))
 })
 
+
+
 router.post('/edit/:id', isLoggedIn, checkRoles('OWNER'), (req, res) => {
 
     const { id } = req.params
     const { name, profileImg, description, specialties } = req.body
-    console.log(id);
-    Restaurant.findByIdAndUpdate(id, { name, profileImg, description, specialties }).then(elem => {
-        console.log(elem);
-        res.redirect(`/restaurants/detail/${elem._id}`)
-    }).catch(err => console.log('Error!', err))
+
+    Restaurant.findByIdAndUpdate(id, { name, profileImg, description, specialties })
+        .then(elem => {
+            console.log(elem);
+            res.redirect(`/restaurants/detail/${elem._id}`)
+        })
+        .catch(err => console.log('Error!', err))
+})
+
+router.post('/filter', (req, res) => {
+    let availability = req.query.avail
+    let specialties = req.query.spec
+
+    if (availability && specialities) {
+        Restaurant.find({ availability, specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
+    } else if (availability) {
+        Restaurant.find({ availability }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
+    } else {
+        Restaurant.find({ specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
+    }
 })
 
 module.exports = router
