@@ -40,7 +40,7 @@ const restaurantSchema = new Schema({
 
 
     specialties: {
-        type: String,
+        type: [String],
         enum: ['pizza', 'hamburguer', 'sushi', 'chinese', 'veggie', 'japanese', 'poke', 'dessert', 'spanish', 'italian', 'tapas', 'pasta', 'kebab', 'mexican', 'salad', 'indian'],
         required: true
     },

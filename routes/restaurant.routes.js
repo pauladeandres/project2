@@ -6,8 +6,11 @@ const Dish = require('./../models/dish.model')
 
 router.get('/', (req, res) => res.render('pages/restaurants/index')) //TODO
 
-//router.get('/map') TODO
-""
+const { isLoggedIn, checkRoles } = require('./../middlewares')
+
+
+router.get('/map', (req,res) => res.render('pages/restaurants/map'))
+
 router.get('/detail/:id', (req, res) => {
 
     const { id } = req.params
