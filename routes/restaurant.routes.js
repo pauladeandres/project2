@@ -18,23 +18,23 @@ router.get('/detail/:id', (req, res) => {
 //router.use((req, res, next) => req.session.currentUser ? next() : res.redirect('/login'))
 
 
-router.get('/create', /**isLoggedIn, checkRoles('OWNER'),**/(req, res) => res.render('pages/restaurants/create-form'))
+router.get('/create', isLoggedIn, checkRoles('OWNER'), (req, res) => res.render('pages/restaurants/create-form'))
 
-router.post('/create', /**isLoggedIn, checkRoles('OWNER'),**/(req, res) => {
+router.post('/create', isLoggedIn, checkRoles('OWNER'), (req, res) => {
     let { name, profileImg, description, specialties } = req.body
 
     Restaurant.create({ name, profileImg, description, specialties }).then(() => res.redirect('/restaurants')).catch(err => console.log('error', err))
 })
 
 
-router.get('/edit/:id', /**isLoggedIn, checkRoles('OWNER'),**/(req, res) => {
+router.get('/edit/:id', isLoggedIn, checkRoles('OWNER'), (req, res) => {
 
     const { rest_id } = req.params.id
 
     Restaurant.findById(rest_id).then(elem => res.render('pages/restaurants/edit-form', elem)).catch(err => console.log('Error!', err))
 })
 
-router.post('/edit/:id', /**isLoggedIn, checkRoles('OWNER'),**/(req, res) => {
+router.post('/edit/:id', isLoggedIn, checkRoles('OWNER'), (req, res) => {
 
     const { id } = req.params
     const { name, profileImg, description, specialties } = req.body
