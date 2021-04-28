@@ -6,7 +6,16 @@ function initMap() {
         document.querySelector('#map'), { zoom: 16, center: {lat: 40.415586629492516, lng: - 3.7074540617720997}, styles: mapStyles.aubergine }
     )
     //getUserGeolocation()
+
+    
+    // new google.maps.Marker({
+    //     position: { lat: -25.363, lng: 131.044 },
+    //     map,
+    //     title:""
+    // })
 }
+
+
 
 // function getUserGeolocation() {
 
