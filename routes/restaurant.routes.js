@@ -55,14 +55,22 @@ router.post('/edit/:id', isLoggedIn, checkRoles('OWNER'), (req, res) => {
 router.post('/filter', (req, res) => {
     let availability = req.query.avail
     let specialties = req.query.spec
+    let objQuery = {}
+
+
 
     if (availability && specialities) {
-        Restaurant.find({ availability, specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
+        objQuery = { availability, specialties }
+        // Restaurant.find({ availability, specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
     } else if (availability) {
-        Restaurant.find({ availability }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
+        objQuery = { availability }
+        // Restaurant.find({ availability }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
     } else {
-        Restaurant.find({ specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
+        objQuery = { specialties }
+        //Restaurant.find({ specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
     }
+
+    Restaurant.find().populate('specialty').then(data => console.log(data)).catch(err => console.log('Error!', err))
 })
 
 module.exports = router
