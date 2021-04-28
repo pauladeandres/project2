@@ -20,6 +20,7 @@ require('./config/views.config')(app)
 require('./config/session.config')(app)
 require('./config/locals.config')(app)
 
+
 // Routes index
 require('./routes')(app)
 

@@ -3,7 +3,8 @@ const router = express.Router()
 
 // Endpoints
 router.get('/', (req, res) => {
-    //req.app.locals.age = 23
+    
+    console.log(req.session.currentUser)
     res.render('pages/index')
 })
 

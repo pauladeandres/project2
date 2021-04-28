@@ -1,5 +1,5 @@
 <div class="container">
-    <h1>Welcome to {{siteTitle}}</h1>
+    <h1>TAPACITY</h1>
 </div>
 <div class="container">
 
@@ -12,11 +12,79 @@
 
             <form action="/restaurants/edit/{{id}}" method="POST">
 
-                <div class="form-group">
-                    <label for="specialties">Name:</label>
-                    <input type="text" class="form-control" id="specialties" name="specialties">
+                <div>
+                    <p>Which are your preferences today?</p>
                 </div>
-             
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="custom-control custom-checkbox image-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="pizza" name="salad">
+                            <label class="custom-control-label" for="pizza">
+                                <img src="./../img/pizza.png" alt="#" class="img-fluid">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="custom-control custom-checkbox image-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="salad" name="salad">
+                            <label class="custom-control-label" for="salad">
+                                <img src="./../img/salad.png" alt="#" class="img-fluid">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="custom-control custom-checkbox image-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="hamburguer" name="hamburguer">
+                            <label class="custom-control-label" for="hamburguer">
+                                <img src="./../img/hamburguer.png" alt="#" class="img-fluid">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="custom-control custom-checkbox image-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="sushi" name="sushi">
+                            <label class="custom-control-label" for="sushi">
+                                <img src="./../img/sushi.png" alt="#" class="img-fluid">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="custom-control custom-checkbox image-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="noodles" name="noodles">
+                            <label class="custom-control-label" for="noodles">
+                                <img src="./../img/noodles-pasta.png" alt="#" class="img-fluid">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="custom-control custom-checkbox image-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="veggie" name="veggie">
+                            <label class="custom-control-label" for="veggie">
+                                <img src="./../img/veggie.png" alt="#" class="img-fluid">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="custom-control custom-checkbox image-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="poke" name="poke">
+                            <label class="custom-control-label" for="poke">
+                                <img src="./../img/poke.png" alt="#" class="img-fluid">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="custom-control custom-checkbox image-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="dessert" name="dessert">
+                            <label class="custom-control-label" for="dessert">
+                                <img src="./../img/dessert.jpg" alt="#" class="img-fluid">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                    <div class="form-group">
+                        <label for="description">Select your area:</label>
+                        <input type="text" class="form-control" id="description" name="description">
+                    </div>
                 <button type="submit" class="btn btn-dark btn-block">Search</button>
                 {{#if errorMessage}}
                 <div id="error">

@@ -62,14 +62,19 @@ router.post('/login', (req, res) => {
             }
 
             req.session.currentUser = user
+            req.app.locals.user = req.session.currentUser
+            req.app.locals.isLogged = true
+            
             console.log('Tengo aqui el usuario!', req.session)
             res.redirect('/')
+            //TODO Si es owner redirect to My area, si es user redirect to Index
         })
         .catch(err => console.log('error', err))
 })
 
 
 router.get('/logout', (req, res) => {
+    req.app.locals.isLogged = false
     req.session.destroy(err => res.redirect("/auth/login"))
 })
 
