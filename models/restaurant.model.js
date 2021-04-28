@@ -29,6 +29,9 @@ const restaurantSchema = new Schema({
         ref: 'Dish'
     }],
 
+    location: {
+
+    },
     availability: [{
         hour: String,
         date: Date,
