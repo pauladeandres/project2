@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const ObjectID = require('mongodb').ObjectID;
 
 const Restaurant = require('./../models/restaurant.model')
 const Dish = require('./../models/dish.model')
@@ -76,24 +77,48 @@ router.post('/edit/:id', isLoggedIn, checkRoles('OWNER'), (req, res) => {
 })
 
 router.post('/filter', (req, res) => {
-    let availability = req.query.avail
-    let specialties = req.query.spec
-    let objQuery = {}
+    // let availability = req.query.avail
+    // let specialties = req.query.spec
+    // let objQuery = {}
+    console.log(Array.isArray(req.body.id));
+    let specArr = []
 
-
-
-    if (availability && specialties) {
-        objQuery = { availability, specialties }
-        // Restaurant.find({ availability, specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
-    } else if (availability) {
-        objQuery = { availability }
-        // Restaurant.find({ availability }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
+    if (Array.isArray(req.body.id) == true) {
+        specArr.push(...req.body.id)
     } else {
-        objQuery = { specialties }
-        //Restaurant.find({ specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
-    }
+        specArr.push(req.body.id)
 
-    Restaurant.find().populate('specialty').then(data => console.log(data)).catch(err => console.log('Error!', err))
+    }
+    console.log(specArr);
+
+    let objQuery = []
+    specArr.forEach(elm => {
+        objQuery.push({
+            specialties: new ObjectID(elm)
+        })
+    })
+
+    console.log(objQuery);
+
+
+    // console.log(objQuery)
+    Restaurant.find({ $and: [...objQuery] }).then(data => console.log(data)).catch(err => console.log('Error!', err))
+    // console.log(objQuery)
+
+
+    //{$and:[{specialties: ObjectId('60897e8f8ff4b591e6d02304')},{specialties: ObjectId('60897e8f8ff4b591eda02304')}]}
+    // if (availability && specialties) {
+    //     objQuery = { availability, specialties }
+    //     // Restaurant.find({ availability, specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
+    // } else if (availability) {
+    //     objQuery = { availability }
+    //     // Restaurant.find({ availability }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
+    // } else {
+    //     objQuery = { specialties }
+    //     //Restaurant.find({ specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
+    // }
+
+
 })
 
 //CREATE DISH
