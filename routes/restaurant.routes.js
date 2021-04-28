@@ -10,7 +10,7 @@ const { isLoggedIn, checkRoles } = require('./../middlewares')
 const User = require('../models/user.model')
 
 
-router.get('/map', (req,res) => res.render('pages/restaurants/map'))
+router.get('/map', (req, res) => res.render('pages/restaurants/map'))
 
 router.get('/detail/:id', (req, res) => {
 
@@ -60,17 +60,40 @@ router.get('/edit/:id', isLoggedIn, checkRoles('OWNER'), (req, res) => {
     .catch(err => console.log('Error!', err))
 })
 
+
+
 router.post('/edit/:id', isLoggedIn, checkRoles('OWNER'), (req, res) => {
 
     const { id } = req.params
     const { name, profileImg, description, specialties } = req.body
-    console.log(id);
-    Restaurant
-    .findByIdAndUpdate(id, { name, profileImg, description, specialties })
-    .then(elem => {
-        console.log(elem);
-        res.redirect(`/restaurants/detail/${elem._id}`)
-    }).catch(err => console.log('Error!', err))
+
+    Restaurant.findByIdAndUpdate(id, { name, profileImg, description, specialties })
+        .then(elem => {
+            console.log(elem);
+            res.redirect(`/restaurants/detail/${elem._id}`)
+        })
+        .catch(err => console.log('Error!', err))
+})
+
+router.post('/filter', (req, res) => {
+    let availability = req.query.avail
+    let specialties = req.query.spec
+    let objQuery = {}
+
+
+
+    if (availability && specialities) {
+        objQuery = { availability, specialties }
+        // Restaurant.find({ availability, specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
+    } else if (availability) {
+        objQuery = { availability }
+        // Restaurant.find({ availability }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
+    } else {
+        objQuery = { specialties }
+        //Restaurant.find({ specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
+    }
+
+    Restaurant.find().populate('specialty').then(data => console.log(data)).catch(err => console.log('Error!', err))
 })
 
 //CREATE DISH
