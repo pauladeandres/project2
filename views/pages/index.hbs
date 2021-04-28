@@ -18,7 +18,7 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="custom-control custom-checkbox image-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="pizza" name="salad">
+                            <input type="checkbox" class="custom-control-input" value="" id="pizza" name="pizza">
                             <label class="custom-control-label" for="pizza">
                                 <img src="./../img/pizza.png" alt="#" class="img-fluid">
                             </label>
@@ -81,10 +81,10 @@
                         </div>
                     </div>
                 </div>
-                    <div class="form-group">
-                        <label for="description">Select your area:</label>
-                        <input type="text" class="form-control" id="description" name="description">
-                    </div>
+                <div class="form-group">
+                    <label for="description">Select your area:</label>
+                    <input type="text" class="form-control" id="description" name="description">
+                </div>
                 <button type="submit" class="btn btn-dark btn-block">Search</button>
                 {{#if errorMessage}}
                 <div id="error">
@@ -92,7 +92,7 @@
                 </div>
                 {{/if}}
             </form>
-                
+
         </div>
     </div>
 </div>

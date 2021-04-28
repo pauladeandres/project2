@@ -17,10 +17,10 @@ router.get('/detail/:id', (req, res) => {
     const { id } = req.params
 
     Restaurant
-    .findById(id)
-    .populate('menu')
-    .then(data => res.render('pages/restaurants/detail', data))
-    .catch(err => console.log('Error!', err))
+        .findById(id)
+        .populate('menu')
+        .then(data => res.render('pages/restaurants/detail', data))
+        .catch(err => console.log('Error!', err))
 })
 
 //router.use((req, res, next) => req.session.currentUser ? next() : res.redirect('/login'))
@@ -33,20 +33,20 @@ router.post('/create', isLoggedIn, checkRoles('OWNER'), (req, res) => {
     let id = req.session.currentUser._id
     console.log(id)
     Restaurant
-    .create({ name, profileImg, description, specialties })
-    .then((restaurant) => {
-        console.log(restaurant._id)
-        User.findById(id)
-        .then(user => {
-            console.log(user)
-            user.restaurants.push(restaurant._id)
-            user.save()
+        .create({ name, profileImg, description, specialties })
+        .then((restaurant) => {
+            console.log(restaurant._id)
+            User.findById(id)
+                .then(user => {
+                    console.log(user)
+                    user.restaurants.push(restaurant._id)
+                    user.save()
+                })
+                .catch(err => console.log('error', err))
         })
+
+        .then(res.redirect('/restaurants'))
         .catch(err => console.log('error', err))
-        })
-    
-    .then(res.redirect('/restaurants'))
-    .catch(err => console.log('error', err))
 })
 
 
@@ -55,9 +55,9 @@ router.get('/edit/:id', isLoggedIn, checkRoles('OWNER'), (req, res) => {
     const { rest_id } = req.params.id
 
     Restaurant
-    .findById(rest_id)
-    .then(elem => res.render('pages/restaurants/edit-form', elem))
-    .catch(err => console.log('Error!', err))
+        .findById(rest_id)
+        .then(elem => res.render('pages/restaurants/edit-form', elem))
+        .catch(err => console.log('Error!', err))
 })
 
 
@@ -82,7 +82,7 @@ router.post('/filter', (req, res) => {
 
 
 
-    if (availability && specialities) {
+    if (availability && specialties) {
         objQuery = { availability, specialties }
         // Restaurant.find({ availability, specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
     } else if (availability) {
@@ -98,13 +98,13 @@ router.post('/filter', (req, res) => {
 
 //CREATE DISH
 
-router.post('/my-restaurant/dish/:rest_id', uploadCloud.single('profileImg'), (req,res) => {
-    const {rest_id} = req.params
-    const {name, description, price} = req.body
+router.post('/my-restaurant/dish/:rest_id', uploadCloud.single('profileImg'), (req, res) => {
+    const { rest_id } = req.params
+    const { name, description, price } = req.body
     const profileImg = req.file.url
 
     Dish
-        .create({ name, profileImg, description, price})
+        .create({ name, profileImg, description, price })
         .then((dish) => {
             Restaurant
                 .findById(rest_id)
@@ -121,11 +121,11 @@ router.post('/my-restaurant/dish/:rest_id', uploadCloud.single('profileImg'), (r
 //CREAR DISPONIBILIDAD
 
 router.post('/my-restaurant/availability/:rest_id', (req, res) => {
-    const {rest_id} = req.params
-    const{date, hour, places} = req.body
+    const { rest_id } = req.params
+    const { date, hour, places } = req.body
 
     Restaurant
-        .findByIdAndUpdate(rest_id, {$push: {availability: {date,hour,places}}})
+        .findByIdAndUpdate(rest_id, { $push: { availability: { date, hour, places } } })
         .then((restaurant) => {
             // restaurant.availability.push({date, hour, places})
             // restaurant.save()
