@@ -49,20 +49,11 @@ const restaurantSchema = new Schema({
         ref: 'Dish'
     }],
 
-<<<<<<< HEAD
-    availability:  [{
-            hour: String,
-            date: Date,
-            places: Number
-        }]
-    ,
-=======
     availability: [{
         hour: String,
         date: Date,
         places: Number
     }],
->>>>>>> 1f68a7a7663e9721ae2cc89f0815bd30463c12dd
 }, {
     timestamps: true
 })
