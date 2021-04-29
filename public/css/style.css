@@ -20,4 +20,12 @@ body {
 img {
   width: 200px; }
 
+.link-card {
+  text-decoration: none;
+  color: black; }
+
+.link-card:hover {
+  text-decoration: none;
+  color: black; }
+
 /*# sourceMappingURL=style.css.map */

@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const router = require("../routes/restaurant.routes");
 const Schema = mongoose.Schema;
 
 const specialtySchema = new Schema({

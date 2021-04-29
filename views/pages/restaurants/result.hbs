@@ -1,0 +1,29 @@
+<div class="container">
+    <h2>Restaurants</h2>
+
+    <div class="row justify-content-center">
+        {{#each data}}
+        <div class="card card-body col-md-4">
+            <a class="link-card" href="/restaurants/detail/{{id}}">
+
+                <h4>Name:</h4>
+                <p>{{name}}</p>
+
+                <img src=" {{profileImg}}" alt="{{profileImg}}">
+
+                <h4>Description:</h4>
+                <p>{{description}}</p>
+
+                <h4>Food Specialties:</h4>
+                <ul>
+                    {{#each specialties}}
+                    <li>{{name}}</li>
+                    {{/each}}
+                </ul>
+
+            </a>
+        </div>
+
+        {{/each}}
+    </div>
+</div>

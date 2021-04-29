@@ -1,16 +1,19 @@
 const express = require('express')
 const router = express.Router()
 
+const mongoose = require('mongoose')
+const realObjectId = mongoose.Types.ObjectId
+
+const Specialty = require('./../models/specialty.model')
 const Restaurant = require('./../models/restaurant.model')
 const Dish = require('./../models/dish.model')
-const Specialty = require('./../models/specialty.model')
 
 const uploadCloud = require('../config/cloudinary.js')
+
 router.get('/', (req, res) => res.render('pages/restaurants/index')) //TODO
 
 const { isLoggedIn, checkRoles } = require('./../middlewares')
 const User = require('../models/user.model')
-
 
 router.get('/map', (req, res) => res.render('pages/restaurants/map'))
 
@@ -19,10 +22,10 @@ router.get('/detail/:id', (req, res) => {
     const { id } = req.params
 
     Restaurant
-    .findById(id)
-    .populate('menu')
-    .then(data => res.render('pages/restaurants/detail', data))
-    .catch(err => console.log('Error!', err))
+        .findById(id)
+        .populate('menu')
+        .then(data => res.render('pages/restaurants/detail', data))
+        .catch(err => console.log('Error!', err))
 })
 
 //router.use((req, res, next) => req.session.currentUser ? next() : res.redirect('/login'))
@@ -32,41 +35,31 @@ router.get('/create', isLoggedIn, checkRoles('OWNER'), (req, res) => {
 
     Specialty
         .find()
-        .then(specialties => res.render('pages/restaurants/create-form', specialties))
+        .then(specialties => res.render('pages/restaurants/create-form', {specialties}))
         .catch(err => console.log('Error!', err))
 })
 
 
 router.post('/create', isLoggedIn, checkRoles('OWNER'), (req, res) => {
+
     let { name, profileImg, description, specialties, locationlat, locationlng } = req.body
     let id = req.session.currentUser._id
-    console.log(id)
-    Restaurant
-        .create({ name, profileImg, description, specialties, locationlat, locationlng })
-    .then((restaurant) => {
-        console.log(restaurant._id)
-        User.findById(id)
-        .then(user => {
-            console.log(user)
-            user.restaurants.push(restaurant._id)
-            user.save()
-        })
-        .catch(err => console.log('error', err))
-        })
     
-    .then(res.redirect('/restaurants'))
-    .catch(err => console.log('error', err))
+  Restaurant
+  .create({ name, profileImg, description, specialties, locationlat, locationlng })
+  .then(restaurant => User.findByIdAndUpdate(id, {$push: {restaurants: restaurant._id}}))
+  .then(response => console.log(response))
+    .catch(err => console.log('Error!', err))
+
 })
-
-
 router.get('/edit/:id', isLoggedIn, checkRoles('OWNER'), (req, res) => {
 
     const { rest_id } = req.params.id
 
     Restaurant
-    .findById(rest_id)
-    .then(elem => res.render('pages/restaurants/edit-form', elem))
-    .catch(err => console.log('Error!', err))
+        .findById(rest_id)
+        .then(elem => res.render('pages/restaurants/edit-form', elem))
+        .catch(err => console.log('Error!', err))
 })
 
 
@@ -85,35 +78,68 @@ router.post('/edit/:id', isLoggedIn, checkRoles('OWNER'), (req, res) => {
 })
 
 router.post('/filter', (req, res) => {
-    let availability = req.query.avail
-    let specialties = req.query.spec
-    let objQuery = {}
+    // let availability = req.query.avail
+    // let specialties = req.query.spec
+    // let objQuery = {}
 
+    let specArr = []
 
-
-    if (availability && specialities) {
-        objQuery = { availability, specialties }
-        // Restaurant.find({ availability, specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
-    } else if (availability) {
-        objQuery = { availability }
-        // Restaurant.find({ availability }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
+    if (Array.isArray(req.body.id) == true) {
+        specArr.push(...req.body.id)
     } else {
-        objQuery = { specialties }
-        //Restaurant.find({ specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
-    }
+        specArr.push(req.body.id)
 
-    Restaurant.find().populate('specialty').then(data => console.log(data)).catch(err => console.log('Error!', err))
+    }
+    console.log(specArr);
+
+    let objQuery = []
+
+    //{$and:[{specialties: ObjectId('60897e8f8ff4b591e6d02304')},{specialties: ObjectId('60897e8f8ff4b591eda02304')}]}
+
+    specArr.forEach(elm => {
+        objQuery.push({
+            specialties: new realObjectId(elm)
+        })
+    })
+
+
+    // console.log(objQuery)
+    Restaurant
+        .find({ $and: [...objQuery] })
+        .populate("specialties menu")
+        .then(data => {
+            res.render('pages/restaurants/result', { data })
+        }
+        )
+
+        .catch(err => console.log('Error!', err))
+
 })
+// console.log(objQuery)
+
+
+// if (availability && specialties) {
+//     objQuery = { availability, specialties }
+//     // Restaurant.find({ availability, specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
+// } else if (availability) {
+//     objQuery = { availability }
+//     // Restaurant.find({ availability }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
+// } else {
+//     objQuery = { specialties }
+//     //Restaurant.find({ specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
+// }
+
+
 
 //CREATE DISH
 
-router.post('/my-restaurant/dish/:rest_id', uploadCloud.single('profileImg'), (req,res) => {
-    const {rest_id} = req.params
-    const {name, description, price} = req.body
+router.post('/my-restaurant/dish/:rest_id', uploadCloud.single('profileImg'), (req, res) => {
+    const { rest_id } = req.params
+    const { name, description, price } = req.body
     const profileImg = req.file.url
 
     Dish
-        .create({ name, profileImg, description, price})
+        .create({ name, profileImg, description, price })
         .then((dish) => {
             Restaurant
                 .findById(rest_id)
@@ -130,11 +156,11 @@ router.post('/my-restaurant/dish/:rest_id', uploadCloud.single('profileImg'), (r
 //CREAR DISPONIBILIDAD
 
 router.post('/my-restaurant/availability/:rest_id', (req, res) => {
-    const {rest_id} = req.params
-    const{date, hour, places} = req.body
+    const { rest_id } = req.params
+    const { date, hour, places } = req.body
 
     Restaurant
-        .findByIdAndUpdate(rest_id, {$push: {availability: {date,hour,places}}})
+        .findByIdAndUpdate(rest_id, { $push: { availability: { date, hour, places } } })
         .then((restaurant) => {
             // restaurant.availability.push({date, hour, places})
             // restaurant.save()
@@ -143,5 +169,9 @@ router.post('/my-restaurant/availability/:rest_id', (req, res) => {
         .then(res.redirect(`/user/my-restaurant/${rest_id}`))
         .catch(err => console.log('error', err))
 })
+
+
+
+
 
 module.exports = router

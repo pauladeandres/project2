@@ -10,7 +10,7 @@
             <h2>Look for restaurants</h2>
             <hr>
 
-            <form action="/restaurants/edit/{{id}}" method="POST">
+            <form action="/restaurants/filter" method="POST">
 
                 <div>
                     <p>Which are your preferences today?</p>
@@ -18,7 +18,8 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="custom-control custom-checkbox image-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="pizza" name="pizza">
+                            <input type="checkbox" class="custom-control-input" value="60897ebf8ff4b591e6d02305"
+                                id="pizza" name="id">
                             <label class="custom-control-label" for="pizza">
                                 <img src="./../img/pizza.png" alt="#" class="img-fluid">
                             </label>
@@ -26,7 +27,8 @@
                     </div>
                     <div class="col-md-3">
                         <div class="custom-control custom-checkbox image-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="salad" name="salad">
+                            <input type="checkbox" class="custom-control-input" value="608981fd8ff4b591e6d02310"
+                                id="salad" name="id">
                             <label class="custom-control-label" for="salad">
                                 <img src="./../img/salad.png" alt="salad" class="img-fluid">
                             </label>
@@ -34,7 +36,8 @@
                     </div>
                     <div class="col-md-3">
                         <div class="custom-control custom-checkbox image-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="hamburguer" name="hamburguer">
+                            <input type="checkbox" class="custom-control-input" id="hamburguer"
+                                value="6089801c8ff4b591e6d02307" name="id">
                             <label class="custom-control-label" for="hamburguer">
                                 <img src="./../img/hamburguer.png" alt="#" class="img-fluid">
                             </label>
@@ -42,7 +45,8 @@
                     </div>
                     <div class="col-md-3">
                         <div class="custom-control custom-checkbox image-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="sushi" name="sushi">
+                            <input type="checkbox" class="custom-control-input" value="60897f708ff4b591e6d02306"
+                                id="sushi" name="id">
                             <label class="custom-control-label" for="sushi">
                                 <img src="./../img/sushi.png" alt="#" class="img-fluid">
                             </label>
@@ -50,7 +54,8 @@
                     </div>
                     <div class="col-md-3">
                         <div class="custom-control custom-checkbox image-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="noodles" name="noodles">
+                            <input type="checkbox" class="custom-control-input" value="608a8cf314fc4744ffc43a7e"
+                                id="noodles" name="id">
                             <label class="custom-control-label" for="noodles">
                                 <img src="./../img/noodles-pasta.png" alt="#" class="img-fluid">
                             </label>
@@ -58,7 +63,8 @@
                     </div>
                     <div class="col-md-3">
                         <div class="custom-control custom-checkbox image-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="veggie" name="veggie">
+                            <input type="checkbox" class="custom-control-input" value="608981598ff4b591e6d0230a"
+                                id="veggie" name="id">
                             <label class="custom-control-label" for="veggie">
                                 <img src="./../img/veggie.png" alt="#" class="img-fluid">
                             </label>
@@ -66,7 +72,8 @@
                     </div>
                     <div class="col-md-3">
                         <div class="custom-control custom-checkbox image-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="poke" name="poke">
+                            <input type="checkbox" class="custom-control-input" value="608981718ff4b591e6d0230b"
+                                id="poke" name="id">
                             <label class="custom-control-label" for="poke">
                                 <img src="./../img/poke.png" alt="#" class="img-fluid">
                             </label>
@@ -74,7 +81,8 @@
                     </div>
                     <div class="col-md-3">
                         <div class="custom-control custom-checkbox image-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="dessert" name="dessert">
+                            <input type="checkbox" class="custom-control-input" value="608981818ff4b591e6d0230c"
+                                id="dessert" name="id">
                             <label class="custom-control-label" for="dessert">
                                 <img src="./../img/dessert.jpg" alt="#" class="img-fluid">
                             </label>
@@ -82,7 +90,8 @@
                     </div>
                     <div class="col-md-3">
                         <div class="custom-control custom-checkbox image-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="italian" name="italian">
+                            <input type="checkbox" class="custom-control-input" value="608981db8ff4b591e6d0230e"
+                                id="italian" name="id">
                             <label class="custom-control-label" for="italian">
                                 <img src="./../img/spaghetti.png" alt="italian" class="img-fluid">
                             </label>
@@ -90,33 +99,36 @@
                     </div>
                     <div class="col-md-3">
                         <div class="custom-control custom-checkbox image-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="spanish" name="spanish">
-                            <label class="custom-control-label" for="italian">
+                            <input type="checkbox" class="custom-control-input" value="608981a98ff4b591e6d0230d"
+                                id="spanish" name="id">
+                            <label class="custom-control-label" for="spanish">
                                 <img src="./../img/paella.png" alt="spanish" class="img-fluid">
                             </label>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="custom-control custom-checkbox image-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="kebab" name="kebab">
+                            <input type="checkbox" class="custom-control-input" value="60897e8f8ff4b591e6d02304"
+                                id="kebab" name="id">
                             <label class="custom-control-label" for="kebab">
-                                <img src="./../img/kebab.png" alt="spanish" class="img-fluid">
+                                <img src="./../img/kebab.png" alt="kebab" class="img-fluid">
                             </label>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="custom-control custom-checkbox image-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="mexican" name="mexican">
+                            <input type="checkbox" class="custom-control-input" value="608981ee8ff4b591e6d0230f"
+                                id="mexican" name="id">
                             <label class="custom-control-label" for="mexican">
                                 <img src="./../img/mexican.png" alt="spanish" class="img-fluid">
                             </label>
                         </div>
                     </div>
                 </div>
-                    <div class="form-group">
-                        <label for="description">Select your area:</label>
-                        <input type="text" class="form-control" id="description" name="description">
-                    </div>
+                <div class="form-group">
+                    <label for="description">Select your area:</label>
+                    <input type="text" class="form-control" id="description" name="description">
+                </div>
                 <button type="submit" class="btn btn-dark btn-block">Search</button>
                 {{#if errorMessage}}
                 <div id="error">
@@ -124,7 +136,7 @@
                 </div>
                 {{/if}}
             </form>
-                
+
         </div>
     </div>
 </div>
