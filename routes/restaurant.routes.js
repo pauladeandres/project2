@@ -98,11 +98,10 @@ router.post('/filter', (req, res) => {
         })
     })
 
-    console.log(objQuery);
-
 
     // console.log(objQuery)
-    Restaurant.find({ $and: [...objQuery] }).then(data => console.log(data)).catch(err => console.log('Error!', err))
+    Restaurant.find({ $and: [...objQuery] }).then(data => res.render('pages/restaurants/index', { data })).catch(err => console.log('Error!', err))
+
     // console.log(objQuery)
 
 
