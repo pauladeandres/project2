@@ -1,28 +1,29 @@
 let map
 
-const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-let labelIndex = 0;
-
 function initMap() {
 
     map = new google.maps.Map(
-        document.querySelector('#map'), { zoom: 16, center: {lat: 40.415586629492516, lng: - 3.7074540617720997}, styles: mapStyles.aubergine }
+        document.querySelector('#map'), 
+        { zoom: 16, center: {lat: 40.415586629492516, lng: - 3.7074540617720997}, styles: mapStyles.aubergine }
     )
-    //getUserGeolocation()
+    getApiRestaurants()
+    }
 
-google.maps.event.addListener(map, "click", (event) => {
-    addMarker(event.latLng, map);
-    console.log(event.latLng.lng())
-});
-}
+    function getApiRestaurants() {
 
-function addMarker(location , map) {
-    new google.maps.Marker({
-        position: location,
-        label: labels[labelIndex++ % labels.length],
-        map: map,
-        draggable: true,
-    });
+        axios
+            .get('/api/restaurants')
+            .then(res => placeRestaurantsInMap(res.data))
+            .catch(err => console.log('ERROR EN CLIENTE OBTENIENDO LOS RESTAURANTES', err))
+    }
+
+    function placeRestaurantsInMap(restaurants) {
+
+        restaurants.forEach(elm => {
+            const position = { lat: elm.locationlat, lng: elm.locationlng }
+            const title = elm.name
+            new google.maps.Marker({ title, position, map })
+    })
 }
 
 

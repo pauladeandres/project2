@@ -12,5 +12,5 @@ module.exports = app => {
     app.use('/restaurants', require('./restaurant.routes.js'))
     app.use('/auth', require('./auth.routes.js'))
     app.use('/user', require('./user.routes.js'))
-    
+    app.use('/api', require('./api.routes.js'))
 }

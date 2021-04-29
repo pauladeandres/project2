@@ -23,7 +23,7 @@ const userSchema = new Schema({
     },
     profileImg: {
         type: String,
-        default: ' '   // TODO poner url definitiva
+        default: ' https://i.pinimg.com/236x/8c/70/8b/8c708b478e0e71f7599b75b9cc108ddf.jpg' 
     },
     restaurants: [{
         type: Schema.Types.ObjectId,

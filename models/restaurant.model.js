@@ -11,7 +11,7 @@ const restaurantSchema = new Schema({
 
     profileImg: {
         type: String,
-        default: ' '
+        default: ' https://cdn.otstatic.com/legacy-cw/default2-original.png'
     },
     description: {
         type: String,
@@ -21,7 +21,8 @@ const restaurantSchema = new Schema({
 
     specialties: [{
         type: Schema.Types.ObjectId,
-        ref: 'Specialty'
+        ref: 'Specialty',
+        required: [true, 'Introduce tus especialidades']
     }],
 
     menu: [{

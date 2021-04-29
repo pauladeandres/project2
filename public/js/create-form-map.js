@@ -1,7 +1,6 @@
 let map
-
-const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-let labelIndex = 0;
+let marker
+let markerAdded = 0
 
 function initMap() {
 
@@ -11,17 +10,32 @@ function initMap() {
     //getUserGeolocation()
 
     google.maps.event.addListener(map, "click", (event) => {
+
+        if(markerAdded === 0) {
         addMarker(event.latLng, map);
+        markerAdded = 1
         console.log(event.latLng.lng())
+        } else {
+            marker.setPosition(event.latLng)
+            markerAdded = 1
+        }
         document.getElementById('locationlat').value = event.latLng.lat()
         document.getElementById('locationlng').value = event.latLng.lng()
+        
+        
+            google.maps.event.addListener(marker, "dragend", (event) => {
+                
+                document.getElementById('locationlat').value = marker.getPosition().lat()
+                document.getElementById('locationlng').value = marker.getPosition().lng()
+            })     
     });
 }
 
 function addMarker(location, map) {
-    new google.maps.Marker({
+    marker = new google.maps.Marker({
         position: location,
         label: 'My restaurant',
+        animation: google.maps.Animation.DROP,
         map: map,
         draggable: true,
     });

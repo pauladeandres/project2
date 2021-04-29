@@ -9,7 +9,7 @@ const dishSchema = new Schema({
     },
     profileImg: {
         type: String,
-        default: '../img/dish-default.jpg'
+        default: "https://d1s9hitrceb81w.cloudfront.net/default_image_5.jpg"
     },
     description: {
         type: String,

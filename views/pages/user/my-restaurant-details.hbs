@@ -7,14 +7,16 @@
 <img src="{{profileImg}}" alt="{{profileImg}}">
 
 <h4>Specialties:</h4>
-<p>{{specialties}}</p>
+{{#each menu}}
+<p>{{name}}</p>
+{{/each}}
 {{/with}}
 
 <h4>Menu:</h4>
 
 {{#each restaurant.menu}}
 <ul>
-    <li><img src="{{profileImg}}" alt="{{profileImg}}"></li>
+    <img src="{{profileImg}}" alt="{{name}}">
     <li><h4>{{name}}</h4></li>
     <li>{{description}}</li>
     <li>{{price}}€</li>
@@ -32,15 +34,19 @@
             </p>
             <div class="collapse" id="collapseExample">
                 <div class="card card-body">
-                    <form action="/restaurants/my-restaurant/dish/{{id}}" method="POST" enctype="multipart/form-data">
+                    <form action="/user/my-restaurant/dish/{{id}}" method="POST">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name">
                         </div>
-                    
-                        <div class="form-group">
+                
+                        {{!-- <div class="form-group">
                             <label for="picture">Example file input</label>
                             <input type="file" class="form-control-file" id="picture" name="profileImg">
+                        </div> --}}
+                        <div class="form-group">
+                            <label for="profileImg">Picture</label>
+                            <input type="text" class="form-control" id="profileImg" name="profileImg">
                         </div>
                     
                         <div class="form-group">
@@ -71,7 +77,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-12">
-
+                {{!-- TODO form de crear availability --}}
                 <form action="/restaurants/my-restaurant/availability/{{id}}" method="POST">
                     <div class="form-group">
                         <label class="control-label" for="date">Date:</label>
