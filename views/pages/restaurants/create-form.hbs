@@ -22,15 +22,17 @@
                     <input type="text" class="form-control" id="description" name="description">
                 </div>
                 <div>
-                    <p>Food Specialities:</p>
+                    <p>Food Specialties:</p>
                 </div>
+                {{#each specialties}}
                 <div class="form-group">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="pizza"
+                        <input class="form-check-input" type="checkbox" id="{{name}}" value="{{id}}"
                             name="specialties">
-                        <label class="form-check-label" for="inlineCheckbox1">Pizza</label>
-                    </div>
-                    <div class="form-check form-check-inline">
+                        <label class="form-check-label" for="{{name}}">{{name}}</label>
+                    </div> 
+                    {{/each}}
+                    {{!-- <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="hamburguer"
                             name="specialties">
                         <label class="form-check-label" for="inlineCheckbox2">Hamburguer</label>
@@ -99,9 +101,18 @@
                         <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="indian"
                             name="specialities">
                         <label class="form-check-label" for="inlineCheckbox2">Indian</label>
-                    </div>
+                    </div> --}} 
                     
                 </div>
+
+                <div class="form-group">
+                    <label for="locationlat">Latitude:</label>
+                    <input type="text" class="form-control" id="locationlat" name="locationlat">
+                    <label for="locationlng">Longitude:</label>
+                    <input type="text" class="form-control" id="locationlng" name="locationlng">
+                </div>
+
+                <figure id="create-form-map"></figure>
 
                 <button type="submit" class="btn btn-dark btn-block">Save Restaurant</button>
                 {{#if errorMessage}}
@@ -114,3 +125,8 @@
         </div>
     </div>
 </div>
+
+<script src="/js/mapstyles.js"></script>
+<script src="/js/create-form-map.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9chvdlEH64j4BuyBHdIWwLb215UA_m7I&callback=initMap"
+    type="text/javascript"></script>

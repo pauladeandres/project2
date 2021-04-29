@@ -1,0 +1,26 @@
+<div class="container">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+            <h1>Specialty Creator</h1>
+            <hr>
+
+            <form action="/restaurants/specialty-creator" method="POST">
+
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name">
+                </div>
+            <button type="submit" class="btn btn-dark btn-block">Save Specialty</button>
+            {{#if errorMessage}}
+            <div id="error">
+                <p>{{errorMessage}}</p>
+            </div>
+            {{/if}}
+            </form>
+            
+        </div>
+    </div>
+</div>

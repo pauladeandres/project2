@@ -3,6 +3,8 @@ const router = express.Router()
 
 const Restaurant = require('./../models/restaurant.model')
 const Dish = require('./../models/dish.model')
+const Specialty = require('./../models/specialty.model')
+
 const uploadCloud = require('../config/cloudinary.js')
 router.get('/', (req, res) => res.render('pages/restaurants/index')) //TODO
 
@@ -26,14 +28,21 @@ router.get('/detail/:id', (req, res) => {
 //router.use((req, res, next) => req.session.currentUser ? next() : res.redirect('/login'))
 
 
-router.get('/create', isLoggedIn, checkRoles('OWNER'), (req, res) => res.render('pages/restaurants/create-form'))
+router.get('/create', isLoggedIn, checkRoles('OWNER'), (req, res) => {
+
+    Specialty
+        .find()
+        .then(specialties => res.render('pages/restaurants/create-form', specialties))
+        .catch(err => console.log('Error!', err))
+})
+
 
 router.post('/create', isLoggedIn, checkRoles('OWNER'), (req, res) => {
-    let { name, profileImg, description, specialties } = req.body
+    let { name, profileImg, description, specialties, locationlat, locationlng } = req.body
     let id = req.session.currentUser._id
     console.log(id)
     Restaurant
-    .create({ name, profileImg, description, specialties })
+        .create({ name, profileImg, description, specialties, locationlat, locationlng })
     .then((restaurant) => {
         console.log(restaurant._id)
         User.findById(id)

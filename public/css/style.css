@@ -11,6 +11,12 @@ body {
   background-color: red;
   margin: 0; }
 
+#create-form-map {
+  height: 300px;
+  width: 550px;
+  background-color: red;
+  margin: 0; }
+
 img {
   width: 200px; }
 
