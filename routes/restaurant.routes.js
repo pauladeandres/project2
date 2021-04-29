@@ -35,7 +35,7 @@ router.get('/create', isLoggedIn, checkRoles('OWNER'), (req, res) => {
 
     Specialty
         .find()
-        .then(specialties => res.render('pages/restaurants/create-form', {specialties}))
+        .then(specialties => res.render('pages/restaurants/create-form', { specialties }))
         .catch(err => console.log('Error!', err))
 })
 
@@ -44,12 +44,12 @@ router.post('/create', isLoggedIn, checkRoles('OWNER'), (req, res) => {
 
     let { name, profileImg, description, specialties, locationlat, locationlng } = req.body
     let id = req.session.currentUser._id
-    
-  Restaurant
-  .create({ name, profileImg, description, specialties, locationlat, locationlng })
-  .then(restaurant => User.findByIdAndUpdate(id, {$push: {restaurants: restaurant._id}}))
-  .then(response => console.log(response))
-    .catch(err => console.log('Error!', err))
+
+    Restaurant
+        .create({ name, profileImg, description, specialties, locationlat, locationlng })
+        .then(restaurant => User.findByIdAndUpdate(id, { $push: { restaurants: restaurant._id } }))
+        .then(response => console.log(response))
+        .catch(err => console.log('Error!', err))
 
 })
 router.get('/edit/:id', isLoggedIn, checkRoles('OWNER'), (req, res) => {
@@ -83,16 +83,19 @@ router.post('/filter', (req, res) => {
     // let objQuery = {}
 
     let specArr = []
+    let objQuery = []
+    let conditionQuery = ""
 
     if (Array.isArray(req.body.id) == true) {
         specArr.push(...req.body.id)
-    } else {
+        conditionQuery = "$and: "
+    } else if (Array.isArray(req.body.id) == false && req.body.id) {
         specArr.push(req.body.id)
+    } else if (!req.body.id) {
 
     }
-    console.log(specArr);
 
-    let objQuery = []
+
 
     //{$and:[{specialties: ObjectId('60897e8f8ff4b591e6d02304')},{specialties: ObjectId('60897e8f8ff4b591eda02304')}]}
 
@@ -102,10 +105,15 @@ router.post('/filter', (req, res) => {
         })
     })
 
+    let finalQuery
+    if (objQuery.length > 1) {
+        finalQuery = { $and: [...objQuery] }
+    } else {
+        finalQuery = objQuery[0]
+    }
 
-    // console.log(objQuery)
     Restaurant
-        .find({ $and: [...objQuery] })
+        .find(finalQuery)
         .populate("specialties menu")
         .then(data => {
             res.render('pages/restaurants/result', { data })
