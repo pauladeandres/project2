@@ -2,14 +2,40 @@ const express = require('express')
 const router = express.Router()
 const ObjectID = require('mongodb').ObjectID;
 
+
+const mongoose = require('mongoose')
+const realObjectId = mongoose.Types.ObjectId
+
+const Specialty = require('./../models/specialty.model')
 const Restaurant = require('./../models/restaurant.model')
 const Dish = require('./../models/dish.model')
 const uploadCloud = require('../config/cloudinary.js')
+
 router.get('/', (req, res) => res.render('pages/restaurants/index')) //TODO
 
 const { isLoggedIn, checkRoles } = require('./../middlewares')
 const User = require('../models/user.model')
 
+// router.post("/genid", (req, res) => {
+//     console.log(this)
+//     const { id, idSpec } = req.body
+// })
+
+// router.post("/specialty/new", (req, res) => {
+//     console.log(this)
+//     const { id } = req.body
+//     Specialty
+//         .create({ name: "pizza" })
+//         .then(rest => {
+//             console.log("nueva", rest)
+//             Restaurant
+//                 .findByIdAndUpdate(id, { $push: { specialties: rest._id } }, { new: true })
+//                 .then(rest => console.log(rest))
+//                 .catch(err => console.log(err))
+
+//         })
+//         .catch(err => console.log(err))
+// })
 
 router.get('/map', (req, res) => res.render('pages/restaurants/map'))
 
@@ -25,7 +51,6 @@ router.get('/detail/:id', (req, res) => {
 })
 
 //router.use((req, res, next) => req.session.currentUser ? next() : res.redirect('/login'))
-
 
 router.get('/create', isLoggedIn, checkRoles('OWNER'), (req, res) => res.render('pages/restaurants/create-form'))
 
@@ -80,7 +105,7 @@ router.post('/filter', (req, res) => {
     // let availability = req.query.avail
     // let specialties = req.query.spec
     // let objQuery = {}
-    console.log(Array.isArray(req.body.id));
+
     let specArr = []
 
     if (Array.isArray(req.body.id) == true) {
@@ -92,33 +117,43 @@ router.post('/filter', (req, res) => {
     console.log(specArr);
 
     let objQuery = []
+
+    //{$and:[{specialties: ObjectId('60897e8f8ff4b591e6d02304')},{specialties: ObjectId('60897e8f8ff4b591eda02304')}]}
+
     specArr.forEach(elm => {
         objQuery.push({
-            specialties: new ObjectID(elm)
+            specialties: new realObjectId(elm)
         })
     })
 
 
     // console.log(objQuery)
-    Restaurant.find({ $and: [...objQuery] }).then(data => res.render('pages/restaurants/index', { data })).catch(err => console.log('Error!', err))
+    Restaurant
+        .find({ $and: [...objQuery] })
+        .populate("specialties menu")
+        .then(data => {
+            res.render('pages/restaurants/result', { data })
+        }
+        )
 
-    // console.log(objQuery)
-
-
-    //{$and:[{specialties: ObjectId('60897e8f8ff4b591e6d02304')},{specialties: ObjectId('60897e8f8ff4b591eda02304')}]}
-    // if (availability && specialties) {
-    //     objQuery = { availability, specialties }
-    //     // Restaurant.find({ availability, specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
-    // } else if (availability) {
-    //     objQuery = { availability }
-    //     // Restaurant.find({ availability }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
-    // } else {
-    //     objQuery = { specialties }
-    //     //Restaurant.find({ specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
-    // }
-
+        .catch(err => console.log('Error!', err))
 
 })
+// console.log(objQuery)
+
+
+// if (availability && specialties) {
+//     objQuery = { availability, specialties }
+//     // Restaurant.find({ availability, specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
+// } else if (availability) {
+//     objQuery = { availability }
+//     // Restaurant.find({ availability }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
+// } else {
+//     objQuery = { specialties }
+//     //Restaurant.find({ specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
+// }
+
+
 
 //CREATE DISH
 
@@ -158,5 +193,9 @@ router.post('/my-restaurant/availability/:rest_id', (req, res) => {
         .then(res.redirect(`/user/my-restaurant/${rest_id}`))
         .catch(err => console.log('error', err))
 })
+
+
+
+
 
 module.exports = router
