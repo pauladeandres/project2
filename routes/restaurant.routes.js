@@ -59,7 +59,7 @@ router.post('/create', isLoggedIn, checkRoles('OWNER'), (req, res) => {
     Restaurant
         .create({ name, profileImg, description, specialties, locationlat, locationlng })
         .then(restaurant => User.findByIdAndUpdate(id, { $push: { restaurants: restaurant._id } }))
-        .then(response => console.log(response))
+        .then(response => res.redirect('/restaurants/list'))
         .catch(err => console.log('Error!', err))
 
 })

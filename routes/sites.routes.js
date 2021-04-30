@@ -75,11 +75,13 @@ router.post('/booking-finished/:id', (req, res) => {
 
     Booking
         .findByIdAndUpdate(id, { sites: total })
-        .then(res.render('pages/restaurants/finished-booking'))
+        .then(()=>res.render('pages/restaurants/finished-booking'))
         .catch(err => console.log('Error!', err))
 })
 
 module.exports = router
+
+
 
 
 const newForm = () => {

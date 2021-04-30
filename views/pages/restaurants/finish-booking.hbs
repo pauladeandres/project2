@@ -1,6 +1,7 @@
 <div class="container">
     <h2>You have {{data.sites}} available sites</h2>
 
+    {{#if data.id}}
     <form action="/restaurant/booking/booking-finished/{{data.id}}" method="POST">
         <div class="form-group">
             <label class="control-label" for="places">Reserve your places:</label>
@@ -15,3 +16,8 @@
 
     <a href="/restaurants/reservation/{{id}}">Volver atras</a>
 </div>
+{{/if}}
+
+{{#unless data.id}}
+<p>This restaurant has no sites available</p>
+{{/unless}}

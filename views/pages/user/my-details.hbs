@@ -1,6 +1,6 @@
 {{#if isOwner}}
 {{#with user}}
-
+<div class="container">
 <ul class="nav nav-pills" id="myTab" role="tablist">
     <li class="nav-item">
         <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="details"
@@ -36,10 +36,10 @@
 
         <h2>MY RESTAURANTS</h2>
         <a href="/restaurants/create">ADD RESTAURANT</a>
-
+<div class="row">
         {{#each user.restaurants}}
-
-        <div class="card" style="width: 18rem;">
+    
+        <div class="card col-md-4">
             <img class="card-img-top" src="{{profileImg}}" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">{{name}}</h5>
@@ -47,10 +47,11 @@
                 <a href="/user/my-restaurant/{{id}}" class="btn btn-primary">Restaurant Details</a>
             </div>
         </div>
-
+    
         {{/each}}
         {{!-- teo --}}
-
+    </div>
     </div>
 
+</div>
 </div>

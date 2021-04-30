@@ -1,6 +1,7 @@
 let map
 let marker
 let contentString
+let infowindow
 
 function initMap() {
 
@@ -11,7 +12,7 @@ function initMap() {
 
     getApiRestaurants()
 
-    const infowindow = new google.maps.InfoWindow({
+    infowindow = new google.maps.InfoWindow({
         content: contentString,
     });
 
@@ -31,14 +32,13 @@ function initMap() {
             const position = { lat: elm.locationlat, lng: elm.locationlng }
             const title = elm.name
             marker = new google.maps.Marker({ title, position, map })
-            constentString = `<h2>${elm.name}</h2>`
-    })
+            contentString = `<h2>${elm.name}</h2>`
 
-        marker.addListener(marker, "click", () => {
-            console.log('hola')
-            // infowindow.open(map, marker);
-        });
- 
+            marker.addListener("click", () => {
+
+                infowindow.open(map, marker);
+            });
+    })
 }
 
 
