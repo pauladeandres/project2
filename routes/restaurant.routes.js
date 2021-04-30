@@ -22,6 +22,7 @@ router.get('/map', (req, res) => res.render('pages/restaurants/map'))
 router.get('/list', (req, res) => {
     Restaurant
         .find()
+        .populate("specialties")
         .then(data => res.render('pages/restaurants/result', { data }))
         .catch(err => console.log('Error!', err))
 })
@@ -33,7 +34,7 @@ router.get('/detail/:id', (req, res) => {
 
     Restaurant
         .findById(id)
-        .populate('menu')
+        .populate('specialties menu')
         .then(data => res.render('pages/restaurants/detail', data))
         .catch(err => console.log('Error!', err))
 })
@@ -131,19 +132,6 @@ router.post('/filter', (req, res) => {
         })
         .catch(err => console.log('Error!', err))
 })
-// console.log(objQuery)
-
-
-// if (availability && specialties) {
-//     objQuery = { availability, specialties }
-//     // Restaurant.find({ availability, specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
-// } else if (availability) {
-//     objQuery = { availability }
-//     // Restaurant.find({ availability }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
-// } else {
-//     objQuery = { specialties }
-//     //Restaurant.find({ specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
-// }
 
 
 //CREAR DISPONIBILIDAD
@@ -171,6 +159,7 @@ router.get('/reservation/:rest_id', (req, res) => {
 
     Restaurant
         .findById(rest_id)
+        .populate("specialties menu")
         .then(elem => res.render(`pages/restaurants/reservation`, elem))
         .catch(err => console.log('Error!', err))
 })

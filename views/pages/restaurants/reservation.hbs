@@ -1,10 +1,47 @@
-<h2>{{name}}</h2>
+<div class="container">
 
-<img src="{{profileImg}}" alt="{{profileImg}}">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>{{name}}</h2>
 
-<p>{{description}}</p>
+            <img src="{{profileImg}}" alt="{{profileImg}}">
 
-<h4>Food Specialties</h4>
-{{#each menu}}
-<p>{{name}}</p>
-{{/each}}
+            <p>{{description}}</p>
+            <p>{{id}}</p>
+
+            <h4>Food Specialties</h4>
+            {{#each specialties}}
+            <p>{{this.name}}</p>
+            {{/each}}
+        </div>
+        <div class="col-md-6 form-booking">
+            <form class="form-schedule" action="/restaurant/booking/check-spaces/{{id}}" method="POST">
+                <div class="form-group">
+                    <label class="control-label" for="date">Date:</label>
+                    <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="date" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="hour">Time:</label>
+                    <select class="form-control" id="hour" name="hour">
+                        <option value="">Select the time:</option>
+                        <option value="12:00">12:00h</option>
+                        <option value="13:00">13:00h</option>
+                        <option value="14:00">14:00h</option>
+                        <option value="15:00">15:00h</option>
+                        <option value="16:00">16:00h</option>
+                        <option value="17:00">17:00h</option>
+                        <option value="18:00">18:00h</option>
+                        <option value="19:00">19:00h</option>
+                        <option value="20:00">20:00h</option>
+                        <option value="21:00">21:00h</option>
+                        <option value="22:00">22:00h</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-primary " name="submit" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

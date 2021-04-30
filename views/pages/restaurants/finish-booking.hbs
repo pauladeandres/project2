@@ -1,0 +1,17 @@
+<div class="container">
+    <h2>Tienes {{sites.sites}} sitios disponibles</h2>
+
+    <form action="/restaurant/booking/booking-finished/{{sites.id}}" method="POST">
+        <div class="form-group">
+            <label class="control-label" for="places">Places:</label>
+            <input class="form-control" id="place" name="place" placeholder="places" type="text" />
+            <input value="{{sites.sites}}" name="hidden" type="hidden">
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-primary " name="submit" type="submit">Submit</button>
+        </div>
+    </form>
+
+    <a href="/restaurants/reservation/{{id}}">Volver atras</a>
+</div>
