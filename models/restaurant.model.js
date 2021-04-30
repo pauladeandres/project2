@@ -11,7 +11,6 @@ const restaurantSchema = new Schema({
 
     profileImg: {
         type: String,
-        default: ' https://cdn.otstatic.com/legacy-cw/default2-original.png'
     },
     description: {
         type: String,

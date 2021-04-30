@@ -1,4 +1,6 @@
 let map
+let marker
+let contentString
 
 function initMap() {
 
@@ -6,7 +8,13 @@ function initMap() {
         document.querySelector('#map'), 
         { zoom: 16, center: {lat: 40.415586629492516, lng: - 3.7074540617720997}, styles: mapStyles.aubergine }
     )
+
     getApiRestaurants()
+
+    const infowindow = new google.maps.InfoWindow({
+        content: contentString,
+    });
+
     }
 
     function getApiRestaurants() {
@@ -22,8 +30,15 @@ function initMap() {
         restaurants.forEach(elm => {
             const position = { lat: elm.locationlat, lng: elm.locationlng }
             const title = elm.name
-            new google.maps.Marker({ title, position, map })
+            marker = new google.maps.Marker({ title, position, map })
+            constentString = `<h2>${elm.name}</h2>`
     })
+
+        marker.addListener(marker, "click", () => {
+            console.log('hola')
+            // infowindow.open(map, marker);
+        });
+ 
 }
 
 
