@@ -41,3 +41,12 @@ img {
   text-decoration: none;
   color: black;
 }
+
+.img-wrapper {
+  height:  240px;
+
+  img {
+    object-fit: contain;
+    height: 100%;
+  }
+}
