@@ -38,9 +38,8 @@ const restaurantSchema = new Schema({
         required: true
     },
     availability: [{
-        hour: String,
-        date: Date,
-        places: Number
+        type: Schema.Types.ObjectId,
+        ref: 'SitesAvailable'
     }],
 }, {
     timestamps: true

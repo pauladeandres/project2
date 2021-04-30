@@ -5,5 +5,6 @@
 <p>{{description}}</p>
 
 <h4>Food Specialties</h4>
-{{!-- TODO populate specialties --}}
-<p>{{specialties}}</p>
+{{#each specialties}}
+<li>{{name}}</li>
+{{/each}}

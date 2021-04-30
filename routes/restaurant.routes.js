@@ -22,7 +22,8 @@ router.get('/map', (req, res) => res.render('pages/restaurants/map'))
 router.get('/list', (req, res) => {
     Restaurant
         .find()
-        .then(data => res.render('pages/restaurants/result', {data}))
+        .populate("specialties")
+        .then(data => res.render('pages/restaurants/result', { data }))
         .catch(err => console.log('Error!', err))
 })
 
@@ -33,7 +34,7 @@ router.get('/detail/:id', (req, res) => {
 
     Restaurant
         .findById(id)
-        .populate('menu')
+        .populate('specialties menu')
         .then(data => res.render('pages/restaurants/detail', data))
         .catch(err => console.log('Error!', err))
 })
@@ -45,7 +46,7 @@ router.get('/create', isLoggedIn, checkRoles('OWNER'), (req, res) => {
 
     Specialty
         .find()
-        .then(specialties => res.render('pages/restaurants/create-form', {specialties}))
+        .then(specialties => res.render('pages/restaurants/create-form', { specialties }))
         .catch(err => console.log('Error!', err))
 })
 
@@ -54,12 +55,12 @@ router.post('/create', isLoggedIn, checkRoles('OWNER'), (req, res) => {
 
     let { name, profileImg, description, specialties, locationlat, locationlng } = req.body
     let id = req.session.currentUser._id
-    
-  Restaurant
-  .create({ name, profileImg, description, specialties, locationlat, locationlng })
-  .then(restaurant => User.findByIdAndUpdate(id, {$push: {restaurants: restaurant._id}}))
-  .then(response => console.log(response))
-    .catch(err => console.log('Error!', err))
+
+    Restaurant
+        .create({ name, profileImg, description, specialties, locationlat, locationlng })
+        .then(restaurant => User.findByIdAndUpdate(id, { $push: { restaurants: restaurant._id } }))
+        .then(response => console.log(response))
+        .catch(err => console.log('Error!', err))
 
 })
 
@@ -94,16 +95,19 @@ router.post('/filter', (req, res) => {
     // let objQuery = {}
 
     let specArr = []
+    let objQuery = []
+    let conditionQuery = ""
 
     if (Array.isArray(req.body.id) == true) {
         specArr.push(...req.body.id)
-    } else {
+        conditionQuery = "$and: "
+    } else if (Array.isArray(req.body.id) == false && req.body.id) {
         specArr.push(req.body.id)
+    } else if (!req.body.id) {
 
     }
-    console.log(specArr);
 
-    let objQuery = []
+
 
     //{$and:[{specialties: ObjectId('60897e8f8ff4b591e6d02304')},{specialties: ObjectId('60897e8f8ff4b591eda02304')}]}
 
@@ -113,28 +117,21 @@ router.post('/filter', (req, res) => {
         })
     })
 
-    // console.log(objQuery)
+    let finalQuery
+    if (objQuery.length > 1) {
+        finalQuery = { $and: [...objQuery] }
+    } else {
+        finalQuery = objQuery[0]
+    }
+
     Restaurant
-        .find({ $and: [...objQuery] })
+        .find(finalQuery)
         .populate("specialties menu")
         .then(data => {
             res.render('pages/restaurants/result', { data })
         })
         .catch(err => console.log('Error!', err))
 })
-// console.log(objQuery)
-
-
-// if (availability && specialties) {
-//     objQuery = { availability, specialties }
-//     // Restaurant.find({ availability, specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
-// } else if (availability) {
-//     objQuery = { availability }
-//     // Restaurant.find({ availability }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
-// } else {
-//     objQuery = { specialties }
-//     //Restaurant.find({ specialties }).then(data => res.render('vista', data)).catch(err => console.log('Error!', err))
-// }
 
 
 //CREAR DISPONIBILIDAD
@@ -162,6 +159,7 @@ router.get('/reservation/:rest_id', (req, res) => {
 
     Restaurant
         .findById(rest_id)
+        .populate("specialties menu")
         .then(elem => res.render(`pages/restaurants/reservation`, elem))
         .catch(err => console.log('Error!', err))
 })

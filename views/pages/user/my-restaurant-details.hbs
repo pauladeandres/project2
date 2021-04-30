@@ -17,19 +17,21 @@
 {{#each restaurant.menu}}
 <ul>
     <img src="{{profileImg}}" alt="{{name}}">
-    <li><h4>{{name}}</h4></li>
+    <li>
+        <h4>{{name}}</h4>
+    </li>
     <li>{{description}}</li>
     <li>{{price}}€</li>
 </ul>
- {{/each}}
+{{/each}}
 {{#with restaurant}}
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <p>
-                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
-                    aria-controls="collapseExample">
-                   ADD DISH
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
+                    aria-expanded="false" aria-controls="collapseExample">
+                    ADD DISH
                 </a>
             </p>
             <div class="collapse" id="collapseExample">
@@ -39,7 +41,7 @@
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name">
                         </div>
-                
+
                         {{!-- <div class="form-group">
                             <label for="picture">Example file input</label>
                             <input type="file" class="form-control-file" id="picture" name="profileImg">
@@ -48,17 +50,17 @@
                             <label for="profileImg">Picture</label>
                             <input type="text" class="form-control" id="profileImg" name="profileImg">
                         </div>
-                    
+
                         <div class="form-group">
                             <label for="description">Description</label>
                             <input type="text" class="form-control" id="description" name="description">
                         </div>
-                    
+
                         <div class="form-group">
                             <label for="price">Price</label>
                             <input type="text" class="form-control" id="price" name="price">
                         </div>
-                    
+
                         <button type="submit" class="btn btn-dark btn-block">Create</button>
                         {{#if errorMessage}}
                         <div id="error">
@@ -74,47 +76,23 @@
 
 <h4>Availability:</h4>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-12">
-                {{!-- TODO form de crear availability --}}
-                <form action="/restaurants/my-restaurant/availability/{{id}}" method="POST">
-                    <div class="form-group">
-                        <label class="control-label" for="date">Date:</label>
-                        <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="date" />
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="hour">Time:</label>
-                        <select class="form-control" id="hour" name="hour">
-                            <option value="">Select the time:</option>
-                            <option value="10:00">10:00h</option>
-                            <option value="11:00">11:00h</option>
-                            <option value="12:00">12:00h</option>
-                            <option value="13:00">13:00h</option>
-                            <option value="14:00">14:00h</option>
-                            <option value="15:00">15:00h</option>
-                            <option value="16:00">16:00h</option>
-                            <option value="17:00">17:00h</option>
-                            <option value="18:00">18:00h</option>
-                            <option value="19:00">19:00h</option>
-                            <option value="20:00">20:00h</option>
-                            <option value="21:00">21:00h</option>
-                            <option value="22:00">22:00h</option>
-                            <option value="23:00">23:00h</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="places">Places available:</label>
-                        <input class="form-control" id="places" name="places"  type="number" />
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary " name="submit" type="submit">Submit</button>
-                    </div>
-                </form>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
 
-            </div>
+            <form action="/restaurant/booking/manage-local/{{id}}" method="POST">
+                <div class="form-group">
+                    <label class="control-label" for="places">Places available:</label>
+                    <input class="form-control" id="sites" name="sites" type="number" />
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary " name="submit" type="submit">Submit</button>
+                </div>
+            </form>
+
         </div>
+    </div>
 
 
 
-{{/with}}
+    {{/with}}
