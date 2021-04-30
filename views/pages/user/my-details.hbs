@@ -3,10 +3,12 @@
 
 <ul class="nav nav-pills" id="myTab" role="tablist">
     <li class="nav-item">
-        <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="details" aria-selected="true">My Profile</a>
+        <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="details"
+            aria-selected="true">My Profile</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="restaurants-tab" data-toggle="tab" href="#restaurants" role="tab" aria-controls="restaurants" aria-selected="false">My Restaurants</a>
+        <a class="nav-link" id="restaurants-tab" data-toggle="tab" href="#restaurants" role="tab"
+            aria-controls="restaurants" aria-selected="false">My Restaurants</a>
     </li>
 </ul>
 {{/with}}
@@ -15,7 +17,7 @@
 <div class="tab-content">
 
     <div class="tab-pane active" id="details" role="tabpanel" aria-labelledby="details-tab">
-       
+
         <h2>USER PROFILE</h2>
         {{#with user}}
         <h4>Name:</h4>
@@ -31,25 +33,24 @@
     </div>
 
     <div class="tab-pane" id="restaurants" role="tabpanel" aria-labelledby="restaurants-tab">
-        
+
         <h2>MY RESTAURANTS</h2>
         <a href="/restaurants/create">ADD RESTAURANT</a>
 
         {{#each user.restaurants}}
-        
+
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../../../img/restaurant-default.jpg" alt="Card image cap">
+            <img class="card-img-top" src="{{profileImg}}" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">{{name}}</h5>
                 <p class="card-text">{{description}}</p>
                 <a href="/user/my-restaurant/{{id}}" class="btn btn-primary">Restaurant Details</a>
             </div>
         </div>
-    
+
         {{/each}}
-{{!-- teo --}}
+        {{!-- teo --}}
 
     </div>
 
 </div>
-

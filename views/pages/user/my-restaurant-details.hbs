@@ -79,13 +79,11 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-12">
-            {{!-- TODO form de crear availability --}}
+
             <form action="/restaurant/booking/manage-local/{{id}}" method="POST">
-
-
                 <div class="form-group">
                     <label class="control-label" for="places">Places available:</label>
-                    <input class="form-control" id="places" name="places" type="number" />
+                    <input class="form-control" id="sites" name="sites" type="number" />
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary " name="submit" type="submit">Submit</button>

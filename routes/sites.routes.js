@@ -7,7 +7,7 @@ const Restaurant = require('./../models/restaurant.model')
 
 router.post('/manage-local/:id', (req, res) => {
     let hours = ["12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"]
-    const { places } = req.body
+    const { sites } = req.body
     const { id } = req.params
 
     let today = new Date()
@@ -15,7 +15,6 @@ router.post('/manage-local/:id', (req, res) => {
     let month = today.getMonth()
     let dayNow = today.getDate()
 
-    console.log(places);
 
     for (let i = 0; i < 30; i++) {
         for (let x = 0; x < hours.length; x++) {
@@ -24,12 +23,14 @@ router.post('/manage-local/:id', (req, res) => {
             let day = new Date(year, month, dayNow + i)
 
             Booking
-                .create({ sites: places, hour, day })
+                .create({ sites, hour, day })
                 .then(bookings => Restaurant.findByIdAndUpdate(id, { $push: { availability: bookings._id } }))
-                .then(res.redirect(`/restaurants/detail/${id}`))
+                .then()
                 .catch(err => console.log('Error!', err))
         }
     }
+
+    res.redirect(`/user/my-restaurant/${id}`)
 
 })
 
@@ -56,7 +57,9 @@ router.post('/check-spaces/:id', (req, res) => {
             }
         })
         .then(resp => {
-            res.render('pages/restaurants/finish-booking', { sites: resp.availability[0], id })
+
+            console.log(resp)
+            res.render('pages/restaurants/finish-booking', { data: resp.availability[0], id })
         })
         .catch(err => console.log('Error!', err))
 })
@@ -72,7 +75,7 @@ router.post('/booking-finished/:id', (req, res) => {
 
     Booking
         .findByIdAndUpdate(id, { sites: total })
-        .then(res.redirect('/restaurants/list'))
+        .then(res.render('pages/restaurants/finished-booking'))
         .catch(err => console.log('Error!', err))
 })
 

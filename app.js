@@ -28,7 +28,3 @@ require('./routes')(app)
 require('./config/error-handlers.config')(app)
 
 module.exports = app
-
-/*
-TODO reserva de client
-*/ 

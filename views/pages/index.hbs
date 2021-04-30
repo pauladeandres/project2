@@ -126,15 +126,14 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    {{!-- TODO select area in index --}}
-                    <label for="filter-search">Select your area:</label>
+
+                    {{!-- <label for="filter-search">Select your area:</label>
                     <div id="floating-panel">
                         <input id="address" type="textbox" value="Sydney, NSW" />
                         <input id="submit" type="button" value="Geocode" />
                     </div>
                     <figure id="filter-map"></figure>
-                    <input type="text" class="form-control" id="filter-search" name="filter-search">
-                </div>
+                </div> --}}
                 <button type="submit" class="btn btn-dark btn-block">Search</button>
                 {{#if errorMessage}}
                 <div id="error">
@@ -153,4 +152,7 @@
 <script src="/js/filter-map.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQNdNfWAoKxTrEjVfKHFCg_DkDpTcx6lM&callback=initMap"
     type="text/javascript"></script>
-{{!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9chvdlEH64j4BuyBHdIWwLb215UA_m7I&callback=initMap&libraries=&v=weekly"></script> --}}
+{{!--
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9chvdlEH64j4BuyBHdIWwLb215UA_m7I&callback=initMap&libraries=&v=weekly"></script>
+--}}
